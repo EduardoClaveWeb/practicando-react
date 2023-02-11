@@ -1,25 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { createContext } from 'vm';
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import Inicio from './componentes/Inicio';
+
+const userObjectContext = {loggedIn: false};
+
+export const UserContext = createContext(userObjectContext);
 
 function App() {
+  const [user] = useState(userObjectContext);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={user}>
+      <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Inicio/>}/>
+      </Routes>
+      </BrowserRouter>
+    </UserContext.Provider>
   );
 }
 
